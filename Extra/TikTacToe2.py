@@ -181,8 +181,4 @@ if __name__ == "__main__":
         player = (player+1) %2
         iterations = iterations + 1
 
-
-
-    game.display_state()
-
-
+    print("Au revoir my favorite nemesis!")
