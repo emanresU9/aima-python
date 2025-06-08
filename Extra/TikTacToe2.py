@@ -100,7 +100,7 @@ def minimax_search(game):
         return game.utility(state, inverted=game.initial_turn==1)
     def _max_search(game,state,turn, depth):
         if game.is_done(state):
-            return utility(state)-depth*.001, (None,turn)
+            return utility(state)-depth*.1, (None,turn)
         else:
             best = [-float('inf'),(None,turn)]
             for a in game.actions(state):
@@ -110,7 +110,7 @@ def minimax_search(game):
             return best
     def _min_search(game,state,turn, depth):
         if game.is_done(state):
-            return utility(state)+depth*.001 ,(None,turn)
+            return utility(state)+depth*.1 ,(None,turn)
         else:
             best = [float('inf'),(None,turn)]
             for a in game.actions(state):
@@ -177,8 +177,8 @@ if __name__ == "__main__":
         play_again = input("\nWould you like to play again [y/n]?: ")
         if play_again != 'y' and play_again != 'Y':
             break
-        print(f"\nScore: you have {playerScore} and I have5 {botScore}")
+        print(f"\nScore: you have {playerScore} and I have {botScore}")
         player = (player+1) %2
         iterations = iterations + 1
 
-    print("Au revoir my favorite nemesis!")
+    print("\nokay\n")
