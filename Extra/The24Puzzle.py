@@ -2,6 +2,7 @@ import math
 from typing import List
 import queue
 import pickle
+import os
 
 class X_Puzzle:
     def __init__(self, state):
@@ -46,13 +47,18 @@ class X_Puzzle:
             tile_sets[i][-1] = 0
             tile_sets[i] = tuple(tile_sets[i])
         return tile_sets
-    def create_database(self, output):
+    def create_databases(self):
         state = [num for num in range(1,self.size)] + [0]
         tile_sets = self.create_tile_sets()
-
         databases = {tile_set:{} for tile_set in tile_sets}
-        for tile_set in tile_sets:
-            databases[tile_set] = IDS_DB_Create(tile_set)
+        for i,tile_set in enumerate(tile_sets):
+            if os.path.exists(f"{self.size}_puzzle_set_{i}.db"):
+                databases[tile_set] = self.read_db_from_file(f"{self.size}_puzzle_set_{i}.db")
+            else:
+                databases[tile_set] = self.IDS_DB_Create(tile_set, 5)
+                self.send_db_to_file(databases[tile_set],f"{self.size}_puzzle_set_{i}.db")
+        return databases
+
     def send_db_to_file(self, database, filename):
         with open(filename, "wb") as fd:
             pickle.dump(database, fd)
@@ -110,9 +116,6 @@ class X_Puzzle:
         return database
 
 puzzle = X_Puzzle([num for num in range(1,16)] + [0])
-# state = puzzle.create_tile_sets()[0]
-# database = IDS_DB_Create(state, max_db_size=10)
-# puzzle.send_db_to_file(database, "test.db")
-
-database = puzzle.read_db_from_file("test.db")
-print(sorted(database))
+databases = puzzle.create_databases()
+for database in databases:
+    print(sorted(database.items))
