@@ -60,7 +60,7 @@ class TicTacToeGame:
     def reset(self):
         self.initial_state = ['']*9
 
-def test_is_done():
+def _is_done_test():
     state1 = ['']*9 #Should return False
     state2 = ['X']*9 #Should return True
     state3 = ['O']*9 #Should return True
@@ -77,7 +77,7 @@ def test_is_done():
     game = TicTacToeGame()
     for i,(state,test) in enumerate(states):
         print(f"game.is_done(state{i+1}) -> {game.is_done(state)} #Should return {test}")
-def test_utility():
+def _utility_test():
     state1 = ['']*9 #Should return False
     state2 = ['X']*9 #Should return True
     state3 = ['O']*9 #Should return True
